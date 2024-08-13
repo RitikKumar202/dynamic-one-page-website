@@ -13,16 +13,16 @@ app.get('/api/banner', (req, res) => {
         if (err) {
             res.status(500).json({ error: 'Error fetching banner data' });
         } else {
-            res.json(results[0] || { isVisible: false, description: '', timer: 0, link: '' });
+            res.json(results[0] || { description: '', timer: 0, link: '' });
         }
     });
 });
 
 app.post('/api/banner', (req, res) => {
-    const { isVisible, description, timer, link } = req.body;
+    const { description, timer, link } = req.body;
     connection.query(
-        'INSERT INTO banner_settings (isVisible, description, timer, link) VALUES (?, ?, ?, ?) ON DUPLICATE KEY UPDATE isVisible = VALUES(isVisible), description = VALUES(description), timer = VALUES(timer), link = VALUES(link)',
-        [isVisible, description, timer, link],
+        'INSERT INTO banner_settings (description, timer, link) VALUES (?, ?, ?) ON DUPLICATE KEY UPDATE description = VALUES(description), timer = VALUES(timer), link = VALUES(link)',
+        [description, timer, link],
         (err) => {
             if (err) {
                 res.status(500).json({ error: 'Error updating banner data' });

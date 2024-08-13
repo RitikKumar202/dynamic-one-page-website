@@ -45,6 +45,7 @@ body {
 .banner {
   display: flex;
   flex-direction: column;
+  gap: 15px;
   align-items: center;
   justify-content: center;
   background-color: #4CAF50;
@@ -64,28 +65,34 @@ body {
 
 .banner-description {
   font-size: 1.1rem;
-  margin-bottom: 0.5rem;
+  margin-bottom: 5px;
 }
 
 .banner-timer {
   font-size: 0.9rem;
-  margin-bottom: 0.5rem;
+  margin-bottom: 5px;
 }
 
 .banner-link {
   display: inline-block;
-  background-color: white;
-  color: #4CAF50;
-  padding: 0.5rem 1rem;
-  text-decoration: none;
-  border-radius: 3px;
+  color: #fff;
+  text-decoration: underline;
   font-weight: bold;
   transition: background-color 0.3s, color 0.3s;
 }
 
 .banner-link:hover {
-  background-color: #45a049;
-  color: white;
+  color: #b1b1ff;
+}
+
+.banner-toggle-button {
+  border: none;
+  outline: none;
+  color: #fff;
+  background: #7d7d7dca;
+  padding: 8px 16px;
+  border-radius: 5px;
+  cursor: pointer;
 }
 
 /*============= Dashboard Styles ===========*/

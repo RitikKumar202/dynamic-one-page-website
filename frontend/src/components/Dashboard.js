@@ -1,42 +1,35 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 
 function Dashboard({ bannerData, updateBannerData }) {
-    const [formData, setFormData] = useState(bannerData);
-
-    useEffect(() => {
-        setFormData(bannerData);
-    }, [bannerData]);
+    const [formData, setFormData] = useState({
+        description: '',
+        timer: '',
+        link: '',
+    });
 
     const handleInputChange = (e) => {
-        const { name, value, type, checked } = e.target;
+        const { name, value } = e.target;
         setFormData({
             ...formData,
-            [name]: type === 'checkbox' ? checked : value,
+            [name]: value,
         });
     };
 
     const handleSubmit = (e) => {
         e.preventDefault();
         updateBannerData(formData);
+        // Clear the input fields after form submission
+        setFormData({
+            description: '',
+            timer: '',
+            link: '',
+        });
     };
 
     return (
         <div className="dashboard">
             <h2 className="dashboard-title">Dashboard</h2>
             <form className="dashboard-form" onSubmit={handleSubmit}>
-                <div className="form-group">
-                    <label htmlFor="isVisible" className="form-label">
-                        Banner Visible:
-                        <input
-                            id="isVisible"
-                            type="checkbox"
-                            name="isVisible"
-                            checked={formData.isVisible}
-                            onChange={handleInputChange}
-                            className="form-checkbox"
-                        />
-                    </label>
-                </div>
                 <div className="form-group">
                     <label htmlFor="description" className="form-label">
                         Description:

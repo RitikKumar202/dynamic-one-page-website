@@ -7,11 +7,12 @@ import './App.css';
 
 function App() {
   const [bannerData, setBannerData] = useState({
-    isVisible: false,
     description: '',
     timer: 0,
     link: '',
   });
+
+  const [isBannerVisible, setIsBannerVisible] = useState(false);
 
   useEffect(() => {
     fetchBannerData();
@@ -20,16 +21,34 @@ function App() {
   const fetchBannerData = async () => {
     try {
       const response = await axios.get('http://localhost:5000/api/banner');
-      setBannerData(response.data);
+      const data = response.data;
+
+      if (data.timer > 0) {
+        setBannerData(data);
+        setIsBannerVisible(true);
+      } else {
+        resetBannerData();
+      }
     } catch (error) {
       console.error('Error fetching banner data:', error);
+      resetBannerData(); // Reset in case of error
     }
+  };
+
+  const resetBannerData = () => {
+    setBannerData({
+      description: '',
+      timer: 0,
+      link: '',
+    });
+    setIsBannerVisible(false);
   };
 
   const updateBannerData = async (newData) => {
     try {
       await axios.post('http://localhost:5000/api/banner', newData);
-      setBannerData(newData); // Immediately update the state
+      setBannerData(newData);
+      setIsBannerVisible(true); // Show the banner after update
     } catch (error) {
       console.error('Error updating banner data:', error);
     }
@@ -42,7 +61,11 @@ function App() {
           <h1>Dynamic One-Page Website</h1>
         </header>
         <main className="app-main">
-          {bannerData.isVisible && <Banner {...bannerData} />}
+          <Banner
+            {...bannerData}
+            isBannerVisible={isBannerVisible}
+            setIsBannerVisible={setIsBannerVisible}
+          />
           <Dashboard bannerData={bannerData} updateBannerData={updateBannerData} />
         </main>
       </div>
